@@ -17,8 +17,9 @@ credentials "app.terraform.io" {
 }
 EOM
 
-WORKSPACE=${TF_ACTION_WORKSPACE:-default}
-terraform workspace select "$WORKSPACE"
+if [ -n "$TF_ACTION_SKIP_WORKSPACE" ]; then
+  terraform workspace select "${TF_ACTION_WORKSPACE:-default}"
+fi
 
 set +e
 OUTPUT=$(sh -c "terraform validate -no-color $*" 2>&1)
