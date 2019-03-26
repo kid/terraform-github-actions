@@ -18,7 +18,8 @@ credentials "app.terraform.io" {
 EOM
 
 if [ -n "$TF_ACTION_SKIP_WORKSPACE" ]; then
-  terraform workspace select "${TF_ACTION_WORKSPACE:-default}"
+    echo "Selecting workspace"
+    terraform workspace select "${TF_ACTION_WORKSPACE:-default}"
 fi
 
 set +e
