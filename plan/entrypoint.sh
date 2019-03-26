@@ -26,7 +26,6 @@ set -e
 
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
-terraform workspace select "$WORKSPACE"
 if [ -z "$TF_ACTION_SKIP_WORKSPACE" ]; then
   echo "Selecting workspace"
   terraform workspace select "${TF_ACTION_WORKSPACE:-default}"
