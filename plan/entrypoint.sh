@@ -26,8 +26,13 @@ set -e
 
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
-WORKSPACE=${TF_ACTION_WORKSPACE:-default}
 terraform workspace select "$WORKSPACE"
+if [ -z "$TF_ACTION_SKIP_WORKSPACE" ]; then
+  echo "Selecting workspace"
+  terraform workspace select "${TF_ACTION_WORKSPACE:-default}"
+else
+  echo "Skipping workspace selection"
+fi
 
 set +e
 OUTPUT=$(sh -c "TF_IN_AUTOMATION=true terraform plan -no-color -input=false $*" 2>&1)
