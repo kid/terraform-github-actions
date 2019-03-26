@@ -7,8 +7,8 @@ if [ -n "$TOKEN" ]; then
 fi
 
 if [ -z "$TF_ENV_TOKEN" ]; then
-    echo "Set the TF_ENV_TOKEN env variable."
-    exit 1
+  echo "Set the TF_ENV_TOKEN env variable."
+  exit 1
 fi
 
 /bin/cat > "$HOME/.terraformrc" << EOM
@@ -18,8 +18,10 @@ credentials "app.terraform.io" {
 EOM
 
 if [ -n "$TF_ACTION_SKIP_WORKSPACE" ]; then
-    echo "Selecting workspace"
-    terraform workspace select "${TF_ACTION_WORKSPACE:-default}"
+  echo "Selecting workspace"
+  terraform workspace select "${TF_ACTION_WORKSPACE:-default}"
+else
+  echo "Skipping workspace selection"
 fi
 
 set +e
@@ -29,11 +31,11 @@ echo "$OUTPUT"
 set -e
 
 if [ $SUCCESS -eq 0 ]; then
-    exit 0
+  exit 0
 fi
 
 if [ "$TF_ACTION_COMMENT" = "1" ] || [ "$TF_ACTION_COMMENT" = "false" ]; then
-    exit $SUCCESS
+  exit $SUCCESS
 fi
 
 COMMENT="#### \`terraform validate\` Failed
