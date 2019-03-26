@@ -2,6 +2,21 @@
 set -e
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
+if [ -n "$TOKEN" ]; then
+    TF_ENV_TOKEN=$TOKEN
+fi
+
+if [ -z "$TF_ENV_TOKEN" ]; then
+    echo "Set the TF_ENV_TOKEN env variable."
+    exit 1
+fi
+
+/bin/cat > "$HOME/.terraformrc" << EOM
+credentials "app.terraform.io" {
+  token = "$TF_ENV_TOKEN"
+}
+EOM
+
 WORKSPACE=${TF_ACTION_WORKSPACE:-default}
 terraform workspace select "$WORKSPACE"
 

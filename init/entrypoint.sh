@@ -2,7 +2,7 @@
 set -e
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
-if [ ! -z "$TOKEN" ]; then
+if [ -n "$TOKEN" ]; then
     TF_ENV_TOKEN=$TOKEN
 fi
 
