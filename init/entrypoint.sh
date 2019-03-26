@@ -2,16 +2,16 @@
 set -e
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
-if [[ ! -z "$TOKEN" ]]; then
-	TF_ENV_TOKEN=$TOKEN
+if [ ! -z "$TOKEN" ]; then
+    TF_ENV_TOKEN=$TOKEN
 fi
 
-if [[ -z "$TF_ENV_TOKEN" ]]; then
-	echo "Set the TF_ENV_TOKEN env variable."
-	exit 1
+if [ -z "$TF_ENV_TOKEN" ]; then
+    echo "Set the TF_ENV_TOKEN env variable."
+    exit 1
 fi
 
-/bin/cat > .terraformrc << EOM
+/bin/cat > "$HOME/.terraformrc" << EOM
 credentials "app.terraform.io" {
   token = "$TF_ENV_TOKEN"
 }
